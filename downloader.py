@@ -1,4 +1,5 @@
 import urllib.request
+from slugify import slugify
 import os
 import re
 import html
@@ -35,17 +36,23 @@ class scraper:
         )
 
         '''format names'''
-        self.vid_names = [name.replace(" ", "-") for name in self.vid_names]
-        self.vid_names = [name.replace(".", "_") for name in self.vid_names]
-        self.vid_names = [name.replace(":", "-") for name in self.vid_names]
+        # self.vid_names = [name.replace(" ", "-") for name in self.vid_names]
+        # self.vid_names = [name.replace(".", "_") for name in self.vid_names]
+        # self.vid_names = [name.replace(":", "-") for name in self.vid_names]
+        # self.vid_names = [name.replace("<sub>", "-")
+        #                   for name in self.vid_names]
+        # self.vid_names = [name.replace("</sub>", "")
+        #                   for name in self.vid_names]
+        self.vid_names = [slugify(name) for name in self.vid_names]
         self.vid_names = [name + '.mov' for name in self.vid_names]
 
         print("Total number of URLs available: ", len(self.urls))
 
     def download_urls(self):
         for name, link in zip(self.vid_names, self.urls):
-            print("Downloading file: ", name)
-            urllib.request.urlretrieve(link, 'download/'+name)
+            if not(os.path.exists('download/'+name)):
+                print("Downloading file: ", name)
+                urllib.request.urlretrieve(link, 'download/'+name)
 
 
 if __name__ == '__main__':
