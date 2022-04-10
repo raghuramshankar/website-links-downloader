@@ -51,6 +51,9 @@ class scraper:
     def download_urls(self):
         for name, link in zip(self.vid_names, self.urls):
             if not(os.path.exists('files/'+name)):
+                if not(link.startswith('http')):
+                    link = 'http://mocha-java.uccs.edu/' + \
+                        link[:7] + '/' + link
                 print("Downloading file: ", name)
                 urllib.request.urlretrieve(link, 'files/'+name)
 
