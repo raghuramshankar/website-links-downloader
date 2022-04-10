@@ -50,9 +50,9 @@ class scraper:
 
     def download_urls(self):
         for name, link in zip(self.vid_names, self.urls):
-            if not(os.path.exists('download/'+name)):
+            if not(os.path.exists('files/'+name)):
                 print("Downloading file: ", name)
-                urllib.request.urlretrieve(link, 'download/'+name)
+                urllib.request.urlretrieve(link, 'files/'+name)
 
 
 if __name__ == '__main__':
